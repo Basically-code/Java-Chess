@@ -1,5 +1,6 @@
 //For the Game board
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,6 +14,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 
 public class board{
 
@@ -69,6 +71,7 @@ public class board{
             }
         }
         mouseClickListener(frame);
+        loadChessIcons();
         JPanel gridWrapper = new JPanel(new GridBagLayout());
         gridWrapper.setBackground(new Color(18, 18, 19));
         gridWrapper.add(gridPanel);
@@ -81,7 +84,7 @@ public class board{
 
     private void setColor(int r, int c){
         if(this.colorSwitch){
-            this.grid[r][c].setBackground(new Color(0,0,0));
+            this.grid[r][c].setBackground(new Color(133, 124, 123));
             this.colorSwitch = !this.colorSwitch;
         }else{
             this.grid[r][c].setBackground(new Color(230, 225, 211));
@@ -124,7 +127,58 @@ public class board{
         return new int[]{row,col};
     }
 
+    //Next chess character sprites
+    private ImageIcon loadScaledIcon(String fileName) {
+        String imagePath = "Assets/" + fileName;
+        Image image = new ImageIcon(imagePath).getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        return new ImageIcon(image);
+    }
 
+    //For the pawns
+    private final ImageIcon whitePawn = loadScaledIcon("white-pawn.png");
+    private final ImageIcon BlackPawn = loadScaledIcon("black-pawn.png");
+    //For the rooks
+    private final ImageIcon whiteRook = loadScaledIcon("white-rook.png");
+    private final ImageIcon blackRook = loadScaledIcon("black-rook.png");
+    //For the knights
+    private final ImageIcon whiteKnight = loadScaledIcon("white-knight.png");
+    private final ImageIcon blackKnight = loadScaledIcon("black-knight.png");
+    //For the bishops
+    private final ImageIcon whiteBishop = loadScaledIcon("white-bishop.png");
+    private final ImageIcon blackBishop = loadScaledIcon("black-bishop.png");
+    //For the kings
+    private final ImageIcon whiteKing = loadScaledIcon("white-king.png");
+    private final ImageIcon blackKing = loadScaledIcon("black-king.png");
+    //For the queens
+    private final ImageIcon whiteQueen = loadScaledIcon("white-queen.png");
+    private final ImageIcon blackQueen = loadScaledIcon("black-queen.png");
+
+
+    private void loadChessIcons(){
+        //For the a1 - h1
+        grid[0][0].setIcon(whiteRook);
+        grid[0][1].setIcon(whiteKnight);
+        grid[0][2].setIcon(whiteBishop);
+        grid[0][3].setIcon(whiteKing);
+        grid[0][4].setIcon(whiteQueen);
+        grid[0][5].setIcon(whiteBishop);
+        grid[0][6].setIcon(whiteKnight);
+        grid[0][7].setIcon(whiteRook);
+        //For a7 -h7
+        grid[7][0].setIcon(blackRook);
+        grid[7][1].setIcon(blackKnight);
+        grid[7][2].setIcon(blackBishop);
+        grid[7][3].setIcon(blackKing);
+        grid[7][4].setIcon(blackQueen);
+        grid[7][5].setIcon(blackBishop);
+        grid[7][6].setIcon(blackKnight);
+        grid[7][7].setIcon(blackRook);
+
+        for (int i = 0; i < 8; i++){
+            grid[6][i].setIcon(BlackPawn);
+            grid[1][i].setIcon(whitePawn);
+        }
+    }
     public void initBoard(){
         createBoard();
     }
