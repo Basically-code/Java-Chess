@@ -159,8 +159,8 @@ public class board{
         grid[0][0].setIcon(whiteRook);
         grid[0][1].setIcon(whiteKnight);
         grid[0][2].setIcon(whiteBishop);
-        grid[0][3].setIcon(whiteKing);
-        grid[0][4].setIcon(whiteQueen);
+        grid[0][4].setIcon(whiteKing);
+        grid[0][3].setIcon(whiteQueen);
         grid[0][5].setIcon(whiteBishop);
         grid[0][6].setIcon(whiteKnight);
         grid[0][7].setIcon(whiteRook);
@@ -168,8 +168,8 @@ public class board{
         grid[7][0].setIcon(blackRook);
         grid[7][1].setIcon(blackKnight);
         grid[7][2].setIcon(blackBishop);
-        grid[7][3].setIcon(blackKing);
-        grid[7][4].setIcon(blackQueen);
+        grid[7][4].setIcon(blackKing);
+        grid[7][3].setIcon(blackQueen);
         grid[7][5].setIcon(blackBishop);
         grid[7][6].setIcon(blackKnight);
         grid[7][7].setIcon(blackRook);
