@@ -29,7 +29,6 @@ public class Engine {
     private void highlight(int x, int y, JLabel[][] label, String piece, String[][] list){
         boolean pos = false;
         if(piece.substring(3,4).equals("w")) {pos = true;}
-        removeHighlights(label);
         
         if (piece.substring(4,(piece.length())).equals("k")) ;
         else if (piece.substring(4,(piece.length())).equals("kn")) {this.knights.highlight(x,y,pos,label,list); this.lastPiece = "kn";}
@@ -41,11 +40,12 @@ public class Engine {
         pressCount ++;
     }
 
-    private void removeHighlights(JLabel[][] labels){
+    public void removeHighlights(JLabel[][] labels){
         if(pressCount > 0){
             if(lastPiece.equals("p")) this.pawns.removeHighlights(labels);
             else if(lastPiece.equals("kn")) this.knights.removeHighlights(labels);
         }
+        lastPiece = "";
         
     }
 }

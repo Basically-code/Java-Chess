@@ -107,6 +107,7 @@ public class board{
                 board.this.y_Cord = e.getY();
                 int[] box = boxFinder();
                 System.out.println("The box is: " + pos[box[0]][box[1]]);
+                board.this.engine.removeHighlights(board.this.grid);
                 board.this.engine.marked(box[0], box[1],board.this.grid,board.this.pos);
             }
         });
