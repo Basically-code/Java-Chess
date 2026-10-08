@@ -23,7 +23,7 @@ public class bishop {
         this.possibleMoves   = new HashSet<>();
     }
 
-    public void bishopsMoves(int x, int y,boolean side,String[][] list){
+    private void bishopsMoves(int x, int y,boolean side,String[][] list){
         boolean map1 = true;
         boolean map2 = true;
         int nextRow =  x + 1;

@@ -12,6 +12,8 @@ public class Engine {
     private knight knights;
     private king kings;
     private bishop bishops;
+    private rook rooks;
+    private queen queens;
 
     public Engine(){
         this.b       = new board(this);
@@ -19,6 +21,8 @@ public class Engine {
         this.knights = new knight();
         this.kings   = new king();
         this.bishops = new bishop();
+        this.rooks   = new rook();
+        this.queens  = new queen();
     }
 
     public void marked(int x, int y, JLabel[][] labels, String[][] list){
@@ -36,9 +40,9 @@ public class Engine {
         
         if (piece.substring(4,(piece.length())).equals("k"))        {this.kings.highlight(x,y,pos,label,list); this.lastPiece = "k";}
         else if (piece.substring(4,(piece.length())).equals("kn"))  {this.knights.highlight(x,y,pos,label,list); this.lastPiece = "kn";}
-        else if (piece.substring(4,(piece.length())).equals("q")) ;
+        else if (piece.substring(4,(piece.length())).equals("q"))   {this.queens.highlight(x,y,pos,label,list); this.lastPiece = "q";}
         else if (piece.substring(4,(piece.length())).equals("b"))   {this.bishops.highlight(x,y,pos,label,list); this.lastPiece = "b";}
-        else if (piece.substring(4,(piece.length())).equals("r")) ;
+        else if (piece.substring(4,(piece.length())).equals("r"))   {this.rooks.highlight(x,y,pos,label,list); this.lastPiece = "r";}
         else if (piece.substring(4,(piece.length())).equals("p"))   {this.pawns.highlight(x,y,pos,label,list); this.lastPiece = "p";}
 
         pressCount ++;
@@ -50,6 +54,8 @@ public class Engine {
             else if(lastPiece.equals("kn")) this.knights.removeHighlights(labels);
             else if(lastPiece.equals("k"))  this.kings.removeHighlights(labels);
             else if(lastPiece.equals("b"))  this.bishops.removeHighlights(labels);
+            else if(lastPiece.equals("r"))  this.rooks.removeHighlights(labels);
+            else if(lastPiece.equals("q"))  this.queens.removeHighlights(labels);
         }
         lastPiece = "";
         

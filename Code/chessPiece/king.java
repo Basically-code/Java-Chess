@@ -23,7 +23,7 @@ public class king {
         this.possibleMoves   = new HashSet<>();
     }
 
-    public void kingsMoves(int x, int y,boolean side,String[][] list){
+    private void kingsMoves(int x, int y,boolean side,String[][] list){
         boolean up = true;
         for(int i = 0; i < 2; i++){
             int nextRow = up ? x + 1: x - 1;
