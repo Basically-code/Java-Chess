@@ -30,10 +30,12 @@ public class board{
     private int frame_width  = 700;
     private int frame_height = 700;
     private int border_thickness = 3; 
+    private Engine engine;
 
-    public board(){
-        this.grid = new JLabel[this.row][this.col];
-        this.pos  = new String[this.row][this.col];
+    public board(Engine engine){
+        this.grid   = new JLabel[this.row][this.col];
+        this.pos    = new String[this.row][this.col];
+        this.engine = engine;
     }
 
     private void createBoard(){
@@ -65,13 +67,13 @@ public class board{
                 box.setOpaque(true);
                 box.setBackground(new Color(18, 18, 19));
                 this.grid[r][c] = box;
-                this.pos[r][c] = cols[c] + rows[size - r];
+                this.pos[r][c] = cols[c] + rows[size - r] + "-##";
                 gridPanel.add(box);
                 setColor(r,c);
             }
         }
-        mouseClickListener(frame);
         loadChessIcons();
+        mouseClickListener(frame);
         JPanel gridWrapper = new JPanel(new GridBagLayout());
         gridWrapper.setBackground(new Color(18, 18, 19));
         gridWrapper.add(gridPanel);
@@ -93,7 +95,7 @@ public class board{
     }
 
     public String[][] getPositions(){
-        return pos;
+        return this.pos;
     }
 
     private void mouseClickListener(JFrame frame){
@@ -105,6 +107,7 @@ public class board{
                 board.this.y_Cord = e.getY();
                 int[] box = boxFinder();
                 System.out.println("The box is: " + pos[box[0]][box[1]]);
+                board.this.engine.marked(box[0], box[1],board.this.grid,board.this.pos);
             }
         });
     }
@@ -155,28 +158,33 @@ public class board{
 
 
     private void loadChessIcons(){
+        
         //For the a1 - h1
-        grid[0][0].setIcon(whiteRook);
-        grid[0][1].setIcon(whiteKnight);
-        grid[0][2].setIcon(whiteBishop);
-        grid[0][4].setIcon(whiteKing);
-        grid[0][3].setIcon(whiteQueen);
-        grid[0][5].setIcon(whiteBishop);
-        grid[0][6].setIcon(whiteKnight);
-        grid[0][7].setIcon(whiteRook);
-        //For a7 -h7
-        grid[7][0].setIcon(blackRook);
-        grid[7][1].setIcon(blackKnight);
-        grid[7][2].setIcon(blackBishop);
-        grid[7][4].setIcon(blackKing);
-        grid[7][3].setIcon(blackQueen);
-        grid[7][5].setIcon(blackBishop);
-        grid[7][6].setIcon(blackKnight);
-        grid[7][7].setIcon(blackRook);
+        grid[0][0].setIcon(whiteRook);      this.pos[0][0] = this.pos[0][0].substring(0,3) + "wr";
+        grid[0][1].setIcon(whiteKnight);    this.pos[0][1] = this.pos[0][1].substring(0,3) + "wkn";
+        grid[0][2].setIcon(whiteBishop);    this.pos[0][2] = this.pos[0][2].substring(0,3) + "wb";
+        grid[0][3].setIcon(whiteQueen);     this.pos[0][3] = this.pos[0][3].substring(0,3) + "wq";
+        grid[0][4].setIcon(whiteKing);      this.pos[0][4] = this.pos[0][4].substring(0,3) + "wk";
+        grid[0][5].setIcon(whiteBishop);    this.pos[0][5] = this.pos[0][5].substring(0,3) + "wb";
+        grid[0][6].setIcon(whiteKnight);    this.pos[0][6] = this.pos[0][6].substring(0,3) + "wkn";
+        grid[0][7].setIcon(whiteRook);      this.pos[0][7] = this.pos[0][7].substring(0,3) + "wr";
 
+        //For a7 -h7
+        grid[7][0].setIcon(blackRook);      this.pos[7][0] = this.pos[7][0].substring(0,3) + "br";
+        grid[7][1].setIcon(blackKnight);    this.pos[7][1] = this.pos[7][1].substring(0,3) + "bkn";
+        grid[7][2].setIcon(blackBishop);    this.pos[7][2] = this.pos[7][2].substring(0,3) + "bb";
+        grid[7][3].setIcon(blackQueen);     this.pos[7][3] = this.pos[7][0].substring(0,3) + "bq";
+        grid[7][4].setIcon(blackKing);      this.pos[7][4] = this.pos[7][4].substring(0,3) + "bk";
+        grid[7][5].setIcon(blackBishop);    this.pos[7][5] = this.pos[7][5].substring(0,3) + "bb";
+        grid[7][6].setIcon(blackKnight);    this.pos[7][6] = this.pos[7][6].substring(0,3) + "bkn";
+        grid[7][7].setIcon(blackRook);      this.pos[7][7] = this.pos[7][7].substring(0,3) + "br";
+
+        
         for (int i = 0; i < 8; i++){
+            this.pos[1][i] = this.pos[1][i].substring(0,3) + "wp";
+            grid[1][i].setIcon(whitePawn);  
+            this.pos[6][i] = this.pos[6][i].substring(0,3) + "bp";
             grid[6][i].setIcon(BlackPawn);
-            grid[1][i].setIcon(whitePawn);
         }
     }
     public void initBoard(){

@@ -1,7 +1,8 @@
 
 public class Start {
     public static void main(String[] game){
-        board c = new board();
+        Engine engine = new Engine();
+        board c = new board(engine);
         c.initBoard();
     }
 }
