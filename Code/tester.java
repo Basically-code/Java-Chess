@@ -1,0 +1,186 @@
+//For the Game tester
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+
+public class tester{
+
+    private final int row = 8;
+    private final int col = 8;
+    private JLabel[][] grid;
+    private String[][] pos;
+    private boolean colorSwitch = true;
+    private int x_Cord = 0;
+    private int y_Cord = 0;
+    private int box_width  = 80;
+    private int box_height = 80;
+    private int frame_width  = 700;
+    private int frame_height = 700;
+    private int border_thickness = 3; 
+    private Engine engine;
+
+    public tester(Engine engine){
+        this.grid   = new JLabel[this.row][this.col];
+        this.pos    = new String[this.row][this.col];
+        this.engine = engine;
+    }
+
+    private void createtester(){
+        JFrame frame = new JFrame("Java Chess");
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setSize(this.frame_width, this.frame_height);
+        frame.getContentPane().setBackground(new Color(18, 18, 19));
+        JPanel gridPanel = new JPanel(new GridLayout(this.row, this.col, 0, 0));
+        gridPanel.setBorder(BorderFactory.createLineBorder(new Color(135, 45, 35), this.border_thickness));
+        gridPanel.setBackground(new Color(18, 18, 19));
+
+        Border boxBorder = BorderFactory.createLineBorder(new Color(58, 58, 60), 1);
+        Dimension boxSize = new Dimension(this.box_width, this.box_height);
+
+        final String[] cols = {"A","B","C","D","E","F","G","H"};
+        final int[] rows   = {1,2,3,4,5,6,7,8};
+        final int size = 7;
+
+        for(int r = 0; r < this.row; r++){
+            this.colorSwitch = !this.colorSwitch;
+            for(int c = 0; c < this.col; c++){
+                JLabel box = new JLabel("", SwingConstants.CENTER);
+                box.setPreferredSize(boxSize);
+                box.setMinimumSize(boxSize); 
+                box.setBorder(boxBorder);
+                box.setForeground(Color.WHITE);
+                box.setOpaque(true);
+                box.setBackground(new Color(18, 18, 19));
+                this.grid[r][c] = box;
+                this.pos[r][c] = cols[c] + rows[size - r] + "-##";
+                gridPanel.add(box);
+                setColor(r,c);
+            }
+        }
+        loadChessIcons();
+        mouseClickListener(frame);
+        JPanel gridWrapper = new JPanel(new GridBagLayout());
+        gridWrapper.setBackground(new Color(18, 18, 19));
+        gridWrapper.add(gridPanel);
+        frame.add(gridWrapper, BorderLayout.CENTER);
+        frame.setResizable(false);
+        frame.setVisible(true);
+        return;
+    }
+    
+
+    private void setColor(int r, int c){
+        if(this.colorSwitch){
+            this.grid[r][c].setBackground(new Color(133, 124, 123));
+            this.colorSwitch = !this.colorSwitch;
+        }else{
+            this.grid[r][c].setBackground(new Color(230, 225, 211));
+            this.colorSwitch = !this.colorSwitch;
+        }
+    }
+
+    public String[][] getPositions(){
+        return this.pos;
+    }
+
+    private void mouseClickListener(JFrame frame){
+        frame.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // e.getX() and e.getY() give coordinates relative to the top-left (0,0) of the frame
+                tester.this.x_Cord = e.getX();
+                tester.this.y_Cord = e.getY();
+                int[] box = boxFinder();
+                System.out.println("The box is: " + pos[box[0]][box[1]]);
+                tester.this.engine.removeHighlights(tester.this.grid);
+                tester.this.engine.marked(box[0], box[1],tester.this.grid,tester.this.pos);
+            }
+        });
+    }
+    //Calculate the space between the frame and the grid
+    final int padding_width  = ((this.frame_width - (this.box_width*8))- (this.border_thickness*2)) / 2;
+    final int padding_height = (((this.frame_height - (this.box_height*8))- (this.border_thickness*2)) / 2) + 10;
+    //Constants due to constant window (non-resizable)
+
+    //The four Corners
+    Point top_left     = new Point(padding_width, padding_height);
+    Point top_right    = new Point(padding_width + (this.box_width*8) , padding_height);
+    Point bottom_left  = new Point(padding_width, padding_height + (this.box_width*8));
+    Point bottom_right = new Point(padding_width + (this.box_width*8) , padding_height + (this.box_width*8));
+
+    private int[] boxFinder(){
+        //For the row
+        int row = (this.y_Cord - padding_height) / this.box_height;
+        //For the column
+        int col = (this.x_Cord - padding_width) / this.box_width;
+        return new int[]{row,col};
+    }
+
+    //Next chess character sprites
+    private ImageIcon loadScaledIcon(String fileName) {
+        String imagePath = "Assets/" + fileName;
+        Image image = new ImageIcon(imagePath).getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        return new ImageIcon(image);
+    }
+
+    //For the pawns
+    private final ImageIcon whitePawn = loadScaledIcon("white-pawn.png");
+    private final ImageIcon blackPawn = loadScaledIcon("black-pawn.png");
+    // //For the rooks
+    // private final ImageIcon whiteRook = loadScaledIcon("white-rook.png");
+    // private final ImageIcon blackRook = loadScaledIcon("black-rook.png");
+    // //For the knights
+    // private final ImageIcon whiteKnight = loadScaledIcon("white-knight.png");
+    // private final ImageIcon blackKnight = loadScaledIcon("black-knight.png");
+    // //For the bishops
+    // private final ImageIcon whiteBishop = loadScaledIcon("white-bishop.png");
+    // private final ImageIcon blackBishop = loadScaledIcon("black-bishop.png");
+    // //For the kings
+    // private final ImageIcon whiteKing = loadScaledIcon("white-king.png");
+    // private final ImageIcon blackKing = loadScaledIcon("black-king.png");
+    // //For the queens
+    // private final ImageIcon whiteQueen = loadScaledIcon("white-queen.png");
+    // private final ImageIcon blackQueen = loadScaledIcon("black-queen.png");
+
+
+    private void loadChessIcons(){
+        // // //Test 1 white pawn
+        // int tx = 1;
+        // int ty = 3;
+        // grid[tx][ty].setIcon(whitePawn); this.pos[tx][ty] = this.pos[tx][ty].substring(0,3) + "wp";
+        // grid[tx+ 1][ty + 1].setIcon(blackPawn); this.pos[tx + 1][ty + 1] = this.pos[tx + 1][ty + 1].substring(0,3) + "bp";
+
+        // // Test 2 black pawn
+        // int tx = 6;
+        // int ty = 3;
+        // grid[tx][ty].setIcon(blackPawn); this.pos[tx][ty] = this.pos[tx][ty].substring(0,3) + "bp";
+        // grid[tx - 1][ty - 1].setIcon(whitePawn); this.pos[tx - 1][ty - 1] = this.pos[tx - 1][ty - 1].substring(0,3) + "wp";
+
+        // // Test 2 white knight 
+        // int tx = 4;
+        // int ty = 3;
+        // grid[tx][ty].setIcon(whiteKnight); this.pos[tx][ty] = this.pos[tx][ty].substring(0,3) + "wkn";
+        // grid[tx + 2][ty + 1].setIcon(whitePawn); this.pos[tx + 2][ty + 1] = this.pos[tx + 2][ty + 1].substring(0,3) + "wp";
+        // grid[tx - 2][ty - 1].setIcon(blackPawn); this.pos[tx - 2][ty - 1] = this.pos[tx - 2][ty - 1].substring(0,3) + "bp";
+
+    }
+    
+    public void inittester(){
+        createtester();
+    }
+}
