@@ -107,7 +107,6 @@ public class tester{
                 tester.this.y_Cord = e.getY();
                 int[] box = boxFinder();
                 System.out.println("The box is: " + pos[box[0]][box[1]]);
-                tester.this.engine.removeHighlights(tester.this.grid);
                 tester.this.engine.marked(box[0], box[1],tester.this.grid,tester.this.pos);
             }
         });
@@ -138,11 +137,11 @@ public class tester{
         return new ImageIcon(image);
     }
 
-    //For the pawns
-    private final ImageIcon whitePawn = loadScaledIcon("white-pawn.png");
-    private final ImageIcon blackPawn = loadScaledIcon("black-pawn.png");
-    //For the rooks
-    private final ImageIcon whiteRook = loadScaledIcon("white-rook.png");
+    // //For the pawns
+    // private final ImageIcon whitePawn = loadScaledIcon("white-pawn.png");
+    // private final ImageIcon blackPawn = loadScaledIcon("black-pawn.png");
+    // //For the rooks
+    // private final ImageIcon whiteRook = loadScaledIcon("white-rook.png");
     // private final ImageIcon blackRook = loadScaledIcon("black-rook.png");
     // //For the knights
     // private final ImageIcon whiteKnight = loadScaledIcon("white-knight.png");
@@ -154,7 +153,7 @@ public class tester{
     // private final ImageIcon whiteKing = loadScaledIcon("white-king.png");
     // private final ImageIcon blackKing = loadScaledIcon("black-king.png");
     // //For the queens
-    private final ImageIcon whiteQueen = loadScaledIcon("white-queen.png");
+    // private final ImageIcon whiteQueen = loadScaledIcon("white-queen.png");
     // private final ImageIcon blackQueen = loadScaledIcon("black-queen.png");
 
 

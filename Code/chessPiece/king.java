@@ -1,6 +1,8 @@
 package chessPiece;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
 import java.awt.Color;
@@ -87,5 +89,26 @@ public class king {
 
     private boolean valid(int n, int max){
         return n >= 0 && n < max;
+    }
+
+    public void move(int fromX, int fromY, int toX, int toY, JLabel[][] label, String[][] list) {
+        HashSet<Pair> newSet = new HashSet<>(possibleMoves);
+        newSet.addAll(possibleAttacks);
+
+        if (newSet.contains(new Pair(toX, toY))) {
+            Icon pieceIcon = label[fromX][fromY].getIcon();
+            ImageIcon myImageIcon = null;
+
+            if (pieceIcon instanceof ImageIcon) {
+                myImageIcon = (ImageIcon) pieceIcon;
+            }
+
+            label[fromX][fromY].setIcon(null);
+            label[toX][toY].setIcon(myImageIcon);
+
+            String replace = list[fromX][fromY].substring(3, list[fromX][fromY].length());
+            list[toX][toY] = list[toX][toY].substring(0, 3) + replace;
+            list[fromX][fromY] = list[fromX][fromY].substring(0, 3) + "##";
+        }
     }
 }

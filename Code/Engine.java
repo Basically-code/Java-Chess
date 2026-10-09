@@ -1,11 +1,16 @@
 import chessPiece.*;
+
+//import java.util.HashSet;
+
 import javax.swing.JLabel;
 
 public class Engine {
-    private int click = 0;
     private board b;
     private String lastPiece = "";
     private int pressCount = 0;
+    //private HashSet<Pair> allMoves;
+    private int selectedX = -1;
+    private int selectedY = -1;
 
     //
     private pawn pawns;
@@ -25,14 +30,32 @@ public class Engine {
         this.queens  = new queen();
     }
 
-    public void marked(int x, int y, JLabel[][] labels, String[][] list){
+   public void marked(int x, int y, JLabel[][] labels, String[][] list) {
         String temp = list[x][y];
-        if (!temp.substring(3,temp.length()).equals("##")){
-            if(click == 0){
-                highlight(x,y,labels,temp,list);
-            }
+
+        if (!temp.substring(3).equals("##")) {
+            // select a piece
+            highlight(x, y, labels, temp, list);
+            this.selectedX = x;
+            this.selectedY = y;
+            return;
         }
+
+        // only move if a piece was selected
+        if (selectedX != -1 && !lastPiece.isEmpty()) {
+            move(x, y, labels, list);
+            IO.println("Here3");
+        }              // only if a piece was selected
+
+        removeHighlights(labels);
+        selectedX = -1;
+        selectedY = -1;
+        lastPiece = "";
+        IO.println("Here4");
     }
+
+
+    public record Pair(int x, int y) {}
 
     private void highlight(int x, int y, JLabel[][] label, String piece, String[][] list){
         boolean pos = false;
@@ -48,6 +71,15 @@ public class Engine {
         pressCount ++;
     }
 
+    private void move(int x, int y, JLabel[][] label, String[][] pos) {
+        if (lastPiece.equals("p")) {pawns.move(selectedX, selectedY, x, y, label, pos);}
+        else if (lastPiece.equals("kn")) {knights.move(selectedX, selectedY, x, y, label, pos);}
+        else if (lastPiece.equals("k")) {kings.move(selectedX, selectedY, x, y, label, pos);}
+        else if (lastPiece.equals("b")) {bishops.move(selectedX, selectedY, x, y, label, pos);}
+        else if (lastPiece.equals("r")) {rooks.move(selectedX, selectedY, x, y, label, pos);}
+        else if (lastPiece.equals("q")) {queens.move(selectedX, selectedY, x, y, label, pos);}
+    }
+
     public void removeHighlights(JLabel[][] labels){
         if(pressCount > 0){
             if(lastPiece.equals("p"))       this.pawns.removeHighlights(labels);
@@ -58,6 +90,5 @@ public class Engine {
             else if(lastPiece.equals("q"))  this.queens.removeHighlights(labels);
         }
         lastPiece = "";
-        
     }
 }

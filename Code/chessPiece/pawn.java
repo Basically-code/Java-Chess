@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.util.HashSet;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
 
@@ -23,8 +25,7 @@ public class pawn {
         this.possibleMoves   = new HashSet<>();
     }
 
-    private void pawnsMoves(int x, int y, boolean side, String[][] list){
-        
+    private void pawnsMoves(int x, int y, boolean side, String[][] list){        
         int nextRow = side ? x + 1 : x - 1;
         if (nextRow >= 0 && nextRow < list.length) {
             boolean lr = true;
@@ -80,7 +81,39 @@ public class pawn {
         restart();
     }
 
-    // private boolean isOnBoard(JLabel[][] labels, int x, int y) {
-    //     return x >= 0 && x < labels.length && y >= 0 && y < labels[x].length;
-    // }
+    public void move(int fromX, int fromY, int toX, int toY, JLabel[][] label, String[][] list) {
+    HashSet<Pair> newSet = new HashSet<>(possibleMoves);
+    newSet.addAll(possibleAttacks);
+
+    if (newSet.contains(new Pair(toX, toY))) {
+        Icon pieceIcon = label[fromX][fromY].getIcon();
+        ImageIcon myImageIcon = null;
+
+        if (pieceIcon instanceof ImageIcon) {
+            myImageIcon = (ImageIcon) pieceIcon;
+        }
+
+        label[fromX][fromY].setIcon(null);
+        label[toX][toY].setIcon(myImageIcon);
+
+        // update board state if needed
+        String replace = list[fromX][fromY].substring(3,list[fromX][fromY].length());
+        list[toX][toY] = list[toX][toY].substring(0,3) + replace;
+        list[fromX][fromY] = list[fromX][fromY].substring(0,3) + "##";
+    }
+}
+
+    public HashSet<Pair> getPossibleMoves(){
+        return possibleMoves;
+    }
+
+    public HashSet<Pair> getPossibleAttacks(){
+        return possibleAttacks;
+    }
+
+    public HashSet<Pair> getAllMoves(){
+        HashSet<Pair> newSet = new HashSet<>(possibleMoves);
+        newSet.addAll(possibleAttacks);
+        return newSet;
+    }
 }
