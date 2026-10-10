@@ -108,6 +108,7 @@ public class tester{
                 int[] box = boxFinder();
                 System.out.println("The box is: " + pos[box[0]][box[1]]);
                 tester.this.engine.marked(box[0], box[1],tester.this.grid,tester.this.pos);
+                
             }
         });
     }
@@ -137,75 +138,55 @@ public class tester{
         return new ImageIcon(image);
     }
 
-    // //For the pawns
-    // private final ImageIcon whitePawn = loadScaledIcon("white-pawn.png");
-    // private final ImageIcon blackPawn = loadScaledIcon("black-pawn.png");
-    // //For the rooks
-    // private final ImageIcon whiteRook = loadScaledIcon("white-rook.png");
-    // private final ImageIcon blackRook = loadScaledIcon("black-rook.png");
-    // //For the knights
-    // private final ImageIcon whiteKnight = loadScaledIcon("white-knight.png");
-    // private final ImageIcon blackKnight = loadScaledIcon("black-knight.png");
-    // //For the bishops
-    // private final ImageIcon whiteBishop = loadScaledIcon("white-bishop.png");
-    // private final ImageIcon blackBishop = loadScaledIcon("black-bishop.png");
-    // //For the kings
-    // private final ImageIcon whiteKing = loadScaledIcon("white-king.png");
-    // private final ImageIcon blackKing = loadScaledIcon("black-king.png");
-    // //For the queens
-    // private final ImageIcon whiteQueen = loadScaledIcon("white-queen.png");
-    // private final ImageIcon blackQueen = loadScaledIcon("black-queen.png");
+    //For the pawns
+    private final ImageIcon whitePawn = loadScaledIcon("white-pawn.png");
+    private final ImageIcon blackPawn = loadScaledIcon("black-pawn.png");
+    //For the rooks
+    private final ImageIcon whiteRook = loadScaledIcon("white-rook.png");
+    private final ImageIcon blackRook = loadScaledIcon("black-rook.png");
+    //For the knights
+    private final ImageIcon whiteKnight = loadScaledIcon("white-knight.png");
+    private final ImageIcon blackKnight = loadScaledIcon("black-knight.png");
+    //For the bishops
+    private final ImageIcon whiteBishop = loadScaledIcon("white-bishop.png");
+    private final ImageIcon blackBishop = loadScaledIcon("black-bishop.png");
+    //For the kings
+    private final ImageIcon whiteKing = loadScaledIcon("white-king.png");
+    private final ImageIcon blackKing = loadScaledIcon("black-king.png");
+    //For the queens
+    private final ImageIcon whiteQueen = loadScaledIcon("white-queen.png");
+    private final ImageIcon blackQueen = loadScaledIcon("black-queen.png");
 
 
     private void loadChessIcons(){
-        // //Test 1 white pawn
-        // int tx = 1;
-        // int ty = 3;
-        // grid[tx][ty].setIcon(whitePawn); this.pos[tx][ty] = this.pos[tx][ty].substring(0,3) + "wp";
-        // grid[tx + 1][ty - 1].setIcon(blackPawn); this.pos[tx + 1][ty - 1] = this.pos[tx + 1][ty - 1].substring(0,3) + "bp";
+        
+        //For the a1 - h1
+        grid[0][0].setIcon(whiteRook);      this.pos[0][0] = this.pos[0][0].substring(0,3) + "wr";
+        grid[0][1].setIcon(whiteKnight);    this.pos[0][1] = this.pos[0][1].substring(0,3) + "wkn";
+        grid[0][2].setIcon(whiteBishop);    this.pos[0][2] = this.pos[0][2].substring(0,3) + "wb";
+        grid[0][3].setIcon(whiteQueen);     this.pos[0][3] = this.pos[0][3].substring(0,3) + "wq";
+        grid[0][4].setIcon(whiteKing);      this.pos[0][4] = this.pos[0][4].substring(0,3) + "wk";
+        grid[0][5].setIcon(whiteBishop);    this.pos[0][5] = this.pos[0][5].substring(0,3) + "wb";
+        grid[0][6].setIcon(whiteKnight);    this.pos[0][6] = this.pos[0][6].substring(0,3) + "wkn";
+        grid[0][7].setIcon(whiteRook);      this.pos[0][7] = this.pos[0][7].substring(0,3) + "wr";
 
-        // // Test 2 black pawn
-        // int tx = 6;
-        // int ty = 3;
-        // grid[tx][ty].setIcon(blackPawn); this.pos[tx][ty] = this.pos[tx][ty].substring(0,3) + "bp";
-        // grid[tx - 1][ty - 1].setIcon(whitePawn); this.pos[tx - 1][ty - 1] = this.pos[tx - 1][ty - 1].substring(0,3) + "wp";
+        //For a7 -h7
+        grid[7][0].setIcon(blackRook);      this.pos[7][0] = this.pos[7][0].substring(0,3) + "br";
+        grid[7][1].setIcon(blackKnight);    this.pos[7][1] = this.pos[7][1].substring(0,3) + "bkn";
+        grid[7][2].setIcon(blackBishop);    this.pos[7][2] = this.pos[7][2].substring(0,3) + "bb";
+        grid[7][3].setIcon(blackQueen);     this.pos[7][3] = this.pos[7][0].substring(0,3) + "bq";
+        grid[7][4].setIcon(blackKing);      this.pos[7][4] = this.pos[7][4].substring(0,3) + "bk";
+        grid[7][5].setIcon(blackBishop);    this.pos[7][5] = this.pos[7][5].substring(0,3) + "bb";
+        grid[7][6].setIcon(blackKnight);    this.pos[7][6] = this.pos[7][6].substring(0,3) + "bkn";
+        grid[7][7].setIcon(blackRook);      this.pos[7][7] = this.pos[7][7].substring(0,3) + "br";
 
-        // // Test 2 white knight 
-        // int tx = 4;
-        // int ty = 3;
-        // grid[tx][ty].setIcon(whiteKnight); this.pos[tx][ty] = this.pos[tx][ty].substring(0,3) + "wkn";
-        // grid[tx + 2][ty + 1].setIcon(whitePawn); this.pos[tx + 2][ty + 1] = this.pos[tx + 2][ty + 1].substring(0,3) + "wp";
-        // grid[tx - 2][ty - 1].setIcon(blackPawn); this.pos[tx - 2][ty - 1] = this.pos[tx - 2][ty - 1].substring(0,3) + "bp";
-
-
-        // // Test 3 White King
-        // int tx = 4;
-        // int ty = 3;
-        // grid[tx][ty].setIcon(whiteKing); this.pos[tx][ty] = this.pos[tx][ty].substring(0,3) + "wk";
-        // grid[tx + 1][ty].setIcon(blackPawn); this.pos[tx + 1][ty] = this.pos[tx + 1][ty].substring(0,3) + "bp";
-
-        // // Test 4 bishop
-        // int tx = 4;
-        // int ty = 3;
-        // grid[tx][ty].setIcon(whiteBishop); this.pos[tx][ty] = this.pos[tx][ty].substring(0,3) + "wb";
-        // grid[tx + 1][ty + 1].setIcon(blackPawn); this.pos[tx + 1][ty + 1] = this.pos[tx + 1][ty + 1].substring(0,3) + "bp";
-        // grid[tx - 2][ty - 2].setIcon(whitePawn); this.pos[tx - 2][ty - 2] = this.pos[tx - 2][ty - 2].substring(0,3) + "wp";
-
-        // // Test 5 rook
-        // int tx = 4;
-        // int ty = 3;
-        // grid[tx][ty].setIcon(whiteRook); this.pos[tx][ty] = this.pos[tx][ty].substring(0,3) + "wr";
-        // grid[tx + 3][ty].setIcon(blackPawn); this.pos[tx + 3][ty] = this.pos[tx + 3][ty].substring(0,3) + "bp";
-        // grid[tx - 2][ty].setIcon(whitePawn); this.pos[tx - 2][ty] = this.pos[tx - 2][ty].substring(0,3) + "wp";
-
-        // //Test 6 queen 
-        // int tx = 4;
-        // int ty = 3;
-        // grid[tx][ty].setIcon(whiteQueen); this.pos[tx][ty] = this.pos[tx][ty].substring(0,3) + "wq";
-        // grid[tx - 2][ty].setIcon(whitePawn); this.pos[tx - 2][ty] = this.pos[tx - 2][ty].substring(0,3) + "wp";
-        // grid[tx + 3][ty].setIcon(blackPawn); this.pos[tx + 3][ty] = this.pos[tx + 3][ty].substring(0,3) + "bp";
-
-
+        
+        for (int i = 0; i < 8; i++){
+            this.pos[1][i] = this.pos[1][i].substring(0,3) + "wp";
+            grid[1][i].setIcon(whitePawn);  
+            this.pos[6][i] = this.pos[6][i].substring(0,3) + "bp";
+            grid[6][i].setIcon(blackPawn);
+        }
     }
     
     public void inittester(){
