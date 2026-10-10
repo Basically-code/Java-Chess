@@ -256,6 +256,7 @@ public class pieces {
 
     ///For highlighting the moves (Green: Possible normal moves  & Red: Possible Attacks)
     public void highlight(String s, int x, int y, boolean side, JLabel[][] labels, String[][] list) {
+        restart();
         moves(s, x, y, side, list);
         for(Pair p: this.possibleAttacks){
             Border border = BorderFactory.createLineBorder(new Color(204, 35, 22),3);
@@ -272,12 +273,9 @@ public class pieces {
     public void removeHighlights(JLabel[][] labels){
         HashSet<Pair> newSet = new HashSet<>(possibleMoves);
         newSet.addAll(possibleAttacks);
-        IO.println(newSet);
         for (Pair p: newSet){
             labels[p.x()][p.y()].setBorder(null);
-            IO.println("remove");
         }
-        restart();
     }
 
     //To move one of the pieces
