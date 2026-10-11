@@ -4,12 +4,9 @@ import javax.swing.JLabel;
 public class Engine {
     @SuppressWarnings("unused")
 	private board b;
-    
-    //private HashSet<Pair> allMoves;
     private int selectedX = -1;
     private int selectedY = -1;
 
-    //
     private pieces pieces;
 
     public Engine(){
@@ -24,20 +21,18 @@ public class Engine {
 
         if (selectedX != -1 && selectedY != -1) {
             pieces.removeHighlights(labels);
-        }
-
-        if (selectedX != -1 && selectedY != -1 && !list[selectedX][selectedY].substring(3).equals("##")) {
-            this.pieces.move(selectedX, selectedY, x, y, labels, list);
-            selectedX = -1;
-            selectedY = -1;
         } 
 
-        if (!temp.equals("##")) {
+        if (!temp.equals("##") && !this.pieces.checkAttack(x, y)) {
             String piece = temp.substring(1,temp.length());
             this.pieces.highlight(piece, x, y, pos, labels, list);
             this.selectedX = x;
             this.selectedY = y;
             
+        }else if (selectedX != -1 && selectedY != -1 && !list[selectedX][selectedY].substring(3).equals("##")) {
+            this.pieces.move(selectedX, selectedY, x, y, labels, list);
+            selectedX = -1;
+            selectedY = -1;
         }
         
     }

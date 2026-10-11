@@ -7,6 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
 
+import sound.chessSound;
+
 
 public class pieces {
 
@@ -290,9 +292,11 @@ public class pieces {
             if (pieceIcon instanceof ImageIcon) {
                 myImageIcon = (ImageIcon) pieceIcon;
             }
-
+            chessSound sound = new chessSound();
+            sound.moveSound();
             label[fromX][fromY].setIcon(null);
             label[toX][toY].setIcon(myImageIcon);
+            
 
             // update board state if needed
             String replace = list[fromX][fromY].substring(3,list[fromX][fromY].length());
@@ -303,13 +307,22 @@ public class pieces {
         
     }
 
+    
+
+    /// Check for an attack position
+    public boolean checkAttack(int x, int y){
+        return possibleAttacks.contains(new Pair(x, y));
+    }
+
     // -----------------------------------------------------------------------------------------------------------------//
+    /// Checks a certain position(or box) if there is a chess piece
     private boolean checkinfront(String[][] list, int x, int y){
         String temp = list[x][y];
         if (temp.substring(3,temp.length()).equals("##")) return true;
         return false;
     }
 
+    /// Checks if the other chess piece is an opponent or friendly
     private boolean OpponentChecker(int x, int y, String[][] lists, boolean side){
         String temp = lists[x][y];
         if(side == false && temp.substring(3,4).equals("w")) return true;
@@ -317,28 +330,34 @@ public class pieces {
         return false;
     }
 
+    /// Checks a certain position(or box) if there is a chess piece
     private boolean pieceChecker(int x, int y, String[][] lists, boolean side){
         String temp = lists[x][y];
         if (temp.substring(3,temp.length()).equals("##")) return true;
         return false;
     }
 
+    /// Checks if the input(n) is in bounds (0 <= n <= max)
     private boolean valid(int n, int max){
         return n >= 0 && n < max;
     }
 
+    /// Obtains possible moves by the last choosen piece
     public HashSet<Pair> getPossibleMoves(){
         return possibleMoves;
     }
 
+    /// Obtains all possible attacks by the last choosen piece
     public HashSet<Pair> getPossibleAttacks(){
         return possibleAttacks;
     }
 
+    /// Obtains all possible and attack moves by the last choosen piece
     public HashSet<Pair> getAllMoves(){
         HashSet<Pair> newSet = new HashSet<>(possibleMoves);
         newSet.addAll(possibleAttacks);
         return newSet;
     }
+        // -----------------------------------------------------------------------------------------------------------------//
 
 }
