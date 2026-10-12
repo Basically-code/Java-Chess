@@ -7,8 +7,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
 
-import sound.chessSound;
-
 
 public class pieces {
 
@@ -292,8 +290,6 @@ public class pieces {
             if (pieceIcon instanceof ImageIcon) {
                 myImageIcon = (ImageIcon) pieceIcon;
             }
-            chessSound sound = new chessSound();
-            sound.moveSound();
             label[fromX][fromY].setIcon(null);
             label[toX][toY].setIcon(myImageIcon);
             
@@ -307,19 +303,17 @@ public class pieces {
         
     }
 
-    
-
-    /// Check for an attack position
-    public boolean checkAttack(int x, int y){
-        return possibleAttacks.contains(new Pair(x, y));
-    }
-
     // -----------------------------------------------------------------------------------------------------------------//
     /// Checks a certain position(or box) if there is a chess piece
     private boolean checkinfront(String[][] list, int x, int y){
         String temp = list[x][y];
         if (temp.substring(3,temp.length()).equals("##")) return true;
         return false;
+    }
+
+    /// Check for an attack position
+    public boolean checkAttack(int x, int y){
+        return possibleAttacks.contains(new Pair(x, y));
     }
 
     /// Checks if the other chess piece is an opponent or friendly
