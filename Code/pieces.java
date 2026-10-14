@@ -61,13 +61,27 @@ public class pieces {
     private void kingsMoves(int x, int y,boolean side,String[][] list){
         boolean up = true;
         for(int i = 0; i < 2; i++){
-            int nextRow = up ? x + 1: x - 1;
+            int nextRow = up ? x + 1: x - 1; 
             if(valid(nextRow, list.length)){
                 if (OpponentChecker(nextRow, y,list,side)){
                     this.possibleAttacks.add(new Pair(nextRow, y));
                 }
                 else if (pieceChecker(nextRow, y, list, side)){
                     this.possibleMoves.add(new Pair(nextRow, y));
+                }
+
+                boolean s = true;
+                for (int j = 0; j < 2; j ++) {
+                    int nextMoveCol = s ? y + 1: y - 1;
+                    if (valid(nextMoveCol, list[0].length)){
+                        if (OpponentChecker(nextRow, nextMoveCol, list, side)){
+                            this.possibleAttacks.add(new Pair(nextRow, nextMoveCol));
+                        }
+                        else if (pieceChecker(nextRow, nextMoveCol, list, side)){
+                            this.possibleMoves.add(new Pair(nextRow, nextMoveCol));
+                        }
+                    }
+                    s = !s;
                 }
             }
             up = !up;
