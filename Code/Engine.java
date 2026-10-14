@@ -1,51 +1,42 @@
-import chessPiece.*;
+// The chess Engine 
 import javax.swing.JLabel;
 
 public class Engine {
-    private int click = 0;
-    private board b;
-    private String lastPiece = "";
-    private int pressCount = 0;
+    @SuppressWarnings("unused")
+	private board b;
+    private int selectedX = -1;
+    private int selectedY = -1;
 
-    //
-    private pawn pawns;
-    private knight knights;
+    private pieces pieces;
 
     public Engine(){
-        this.b = new board(this);
-        pawns   = new pawn();
-        knights = new knight();
+        this.b       = new board(this);
+        this.pieces  = new pieces();
     }
 
-    public void marked(int x, int y, JLabel[][] labels, String[][] list){
-        String temp = list[x][y];
-        if (!temp.substring(3,temp.length()).equals("##")){
-            if(click == 0){
-                highlight(x,y,labels,temp,list);
-            }
-        }
-    }
-
-    private void highlight(int x, int y, JLabel[][] label, String piece, String[][] list){
+    public void marked(int x, int y, JLabel[][] labels, String[][] list) {
+        String temp = list[x][y].substring(3,list[x][y].length());
         boolean pos = false;
-        if(piece.substring(3,4).equals("w")) {pos = true;}
-        
-        if (piece.substring(4,(piece.length())).equals("k")) ;
-        else if (piece.substring(4,(piece.length())).equals("kn")) {this.knights.highlight(x,y,pos,label,list); this.lastPiece = "kn";}
-        else if (piece.substring(4,(piece.length())).equals("q")) ;
-        else if (piece.substring(4,(piece.length())).equals("b")) ;
-        else if (piece.substring(4,(piece.length())).equals("r")) ;
-        else if (piece.substring(4,(piece.length())).equals("p")) {this.pawns.highlight(x,y,pos,label,list); this.lastPiece = "p";}
+        if(temp.toCharArray()[0] == 'w') pos = true;
 
-        pressCount ++;
-    }
+        if (selectedX != -1 && selectedY != -1) {
+            pieces.removeHighlights(labels);
+        } 
 
-    public void removeHighlights(JLabel[][] labels){
-        if(pressCount > 0){
-            if(lastPiece.equals("p")) this.pawns.removeHighlights(labels);
-            else if(lastPiece.equals("kn")) this.knights.removeHighlights(labels);
+        if (!temp.equals("##") && !this.pieces.checkAttack(x, y)) {
+            String piece = temp.substring(1,temp.length());
+            this.pieces.highlight(piece, x, y, pos, labels, list);
+            this.selectedX = x;
+            this.selectedY = y;
+            
+        }else if (selectedX != -1 && selectedY != -1 && !list[selectedX][selectedY].substring(3).equals("##")) {
+            this.pieces.move(selectedX, selectedY, x, y, labels, list);
+            selectedX = -1;
+            selectedY = -1;
         }
-        lastPiece = "";
         
     }
+
+    
+
 }

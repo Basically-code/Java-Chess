@@ -107,7 +107,6 @@ public class board{
                 board.this.y_Cord = e.getY();
                 int[] box = boxFinder();
                 System.out.println("The box is: " + pos[box[0]][box[1]]);
-                board.this.engine.removeHighlights(board.this.grid);
                 board.this.engine.marked(box[0], box[1],board.this.grid,board.this.pos);
             }
         });
@@ -174,7 +173,7 @@ public class board{
         grid[7][0].setIcon(blackRook);      this.pos[7][0] = this.pos[7][0].substring(0,3) + "br";
         grid[7][1].setIcon(blackKnight);    this.pos[7][1] = this.pos[7][1].substring(0,3) + "bkn";
         grid[7][2].setIcon(blackBishop);    this.pos[7][2] = this.pos[7][2].substring(0,3) + "bb";
-        grid[7][3].setIcon(blackQueen);     this.pos[7][3] = this.pos[7][0].substring(0,3) + "bq";
+        grid[7][3].setIcon(blackQueen);     this.pos[7][3] = this.pos[7][3].substring(0,3) + "bq";
         grid[7][4].setIcon(blackKing);      this.pos[7][4] = this.pos[7][4].substring(0,3) + "bk";
         grid[7][5].setIcon(blackBishop);    this.pos[7][5] = this.pos[7][5].substring(0,3) + "bb";
         grid[7][6].setIcon(blackKnight);    this.pos[7][6] = this.pos[7][6].substring(0,3) + "bkn";
