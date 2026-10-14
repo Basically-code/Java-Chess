@@ -1,6 +1,5 @@
 # Java Chess
 
-![Java Chess Board](Screenshot%202026-10-14%20191352.jpg)
 
 A simple, interactive 2D chess game built with Java and the Swing framework.
 
