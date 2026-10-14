@@ -35,7 +35,7 @@ public class pieces {
                 int move = lr ? y + 1: y - 1;
                 if (move > 0 && move < list[nextRow].length){
                     boolean leftWing = !list[nextRow][move].substring(3,list[nextRow][move].length()).equals("##");
-                    if(leftWing){
+                    if(leftWing && OpponentChecker(nextRow, move, list, side)){
                         this.possibleAttacks.add(new Pair(nextRow, move));
                     }
                 }
@@ -90,7 +90,7 @@ public class pieces {
         for(int i = 0; i < 2; i++){
             int nextCol = right ? y + 1: y - 1;
             if(valid(y, list[0].length)){
-                if (OpponentChecker(nextCol, nextCol,list,side)){
+                if (OpponentChecker(x , nextCol,list,side)){
                     this.possibleAttacks.add(new Pair(x, nextCol));
                 }
                 else if (pieceChecker(x, nextCol, list, side)){
@@ -298,20 +298,20 @@ public class pieces {
         newSet.addAll(possibleAttacks);
         if (!(new Pair(toX, toY).equals(new Pair(fromX,fromY)))){
             if (newSet.contains(new Pair(toX, toY))) {
-            Icon pieceIcon = label[fromX][fromY].getIcon();
-            ImageIcon myImageIcon = null;
+                Icon pieceIcon = label[fromX][fromY].getIcon();
+                ImageIcon myImageIcon = null;
 
-            if (pieceIcon instanceof ImageIcon) {
-                myImageIcon = (ImageIcon) pieceIcon;
-            }
-            label[fromX][fromY].setIcon(null);
-            label[toX][toY].setIcon(myImageIcon);
-            
+                if (pieceIcon instanceof ImageIcon) {
+                    myImageIcon = (ImageIcon) pieceIcon;
+                }
+                label[fromX][fromY].setIcon(null);
+                label[toX][toY].setIcon(myImageIcon);
+                
 
-            // update board state if needed
-            String replace = list[fromX][fromY].substring(3,list[fromX][fromY].length());
-            list[toX][toY] = list[toX][toY].substring(0,3) + replace;
-            list[fromX][fromY] = list[fromX][fromY].substring(0,3) + "##";
+                // update board state if needed
+                String replace = list[fromX][fromY].substring(3,list[fromX][fromY].length());
+                list[toX][toY] = list[toX][toY].substring(0,3) + replace;
+                list[fromX][fromY] = list[fromX][fromY].substring(0,3) + "##";
             }
         }
         
@@ -366,6 +366,6 @@ public class pieces {
         newSet.addAll(possibleAttacks);
         return newSet;
     }
-        // -----------------------------------------------------------------------------------------------------------------//
+    // -----------------------------------------------------------------------------------------------------------------//
 
 }
